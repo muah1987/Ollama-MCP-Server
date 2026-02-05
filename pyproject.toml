@@ -5,7 +5,7 @@ description = "Python-based MCP DevOps Tools Server with Ollama Integration"
 readme = "docs/README.md"
 license = {file = "LICENSE"}
 authors = [
-    {name = "mupoese", email = "mupoese@users.noreply.github.com"},
+    {name = "muah1987", email = "muah1987@users.noreply.github.com"},
 ]
 keywords = ["mcp", "ollama", "devops", "ai", "llm", "automation"]
 classifiers = [
@@ -85,9 +85,9 @@ all = [
 mcp-devops-server = "src.ollama_mcp_server.main:cli"
 
 [project.urls]
-Homepage = "https://github.com/mupoese/Ollama-MCP-Server"
-Repository = "https://github.com/mupoese/Ollama-MCP-Server.git"
-Issues = "https://github.com/mupoese/Ollama-MCP-Server/issues"
+Homepage = "https://github.com/muah1987/Ollama-MCP-Server"
+Repository = "https://github.com/muah1987/Ollama-MCP-Server.git"
+Issues = "https://github.com/muah1987/Ollama-MCP-Server/issues"
 
 [build-system]
 requires = ["setuptools>=68.0", "wheel"]

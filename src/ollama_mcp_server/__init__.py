@@ -14,13 +14,13 @@ Features:
 - Security & Compliance (vulnerability scanning, secret management)
 - Development & Debugging (API testing, database ops, file system, network)
 
-Author: mupoese
+Author: muah1987
 License: GPL-2.0
 Version: 2.0.0
 """
 
 __version__ = "2.0.0"
-__author__ = "mupoese"
+__author__ = "muah1987"
 __license__ = "GPL-2.0"
 
 # Only import configuration by default to avoid dependency issues

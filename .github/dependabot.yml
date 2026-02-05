@@ -8,9 +8,9 @@ updates:
       day: "monday"
       time: "09:00"
     reviewers:
-      - "mupoese"
+      - "muah1987"
     assignees:
-      - "mupoese"
+      - "muah1987"
     commit-message:
       prefix: "deps"
       prefix-development: "deps-dev"
@@ -37,9 +37,9 @@ updates:
       day: "monday"
       time: "09:00"
     reviewers:
-      - "mupoese"
+      - "muah1987"
     assignees:
-      - "mupoese"
+      - "muah1987"
     commit-message:
       prefix: "docker"
       include: "scope"
@@ -52,9 +52,9 @@ updates:
       day: "monday"
       time: "09:00"
     reviewers:
-      - "mupoese"
+      - "muah1987"
     assignees:
-      - "mupoese"
+      - "muah1987"
     commit-message:
       prefix: "ci"
       include: "scope"

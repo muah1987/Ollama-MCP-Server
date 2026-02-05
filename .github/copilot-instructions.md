@@ -11,7 +11,7 @@ This is a Node.js-based Model Context Protocol (MCP) server that provides Ollama
 ### Bootstrap the Development Environment
 ```bash
 # Clone and setup (if not already done)
-git clone https://github.com/mupoese/Ollama-MCP-Server.git
+git clone https://github.com/muah1987/Ollama-MCP-Server.git
 cd Ollama-MCP-Server
 
 # Install dependencies - takes ~15 seconds, NEVER CANCEL

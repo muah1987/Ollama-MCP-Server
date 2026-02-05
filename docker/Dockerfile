@@ -1,10 +1,10 @@
 FROM node:24-alpine
 
 # v1.0.0
-LABEL maintainer="mupoese <info@mupoese.nl>" \
-      author="mupoese" \
+LABEL maintainer="muah1987 <muah1987@users.noreply.github.com>" \
+      author="muah1987" \
       version="1.0.0" \
-      description="Custom MCP server for Ollama (by mupoese)" \
+      description="Custom MCP server for Ollama (by muah1987)" \
       license="GPL-2.0"
 
 WORKDIR /app
