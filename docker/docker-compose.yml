@@ -7,7 +7,7 @@ services:
       dockerfile: docker/Dockerfile.python
       target: production
     # Or use pre-built image:
-    # image: ghcr.io/mupoese/ollama-mcp-server:latest
+    # image: docker.io/mup1987/ollama-mcp-server:latest
     environment:
       - OLLAMA_API=http://host.docker.internal:11434
       - ENVIRONMENT=production

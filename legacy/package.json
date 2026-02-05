@@ -28,7 +28,7 @@
     "ai",
     "llm"
   ],
-  "author": "mupoese",
+  "author": "muah1987",
   "license": "GPL-2.0",
   "devDependencies": {
     "@eslint/js": "^9.35.0",

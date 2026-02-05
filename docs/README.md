@@ -1,6 +1,6 @@
 # MCP Ollama Server
 
-**Author/Maintainer:** [Mupoese](https://github.com/mupoese)  
+**Author/Maintainer:** [muah1987](https://github.com/muah1987)  
 **Version:** v2.0.0  
 **License:** GNU General Public License v2.0  
 **Language:** Python 3.13+ (Migrated from Node.js)
@@ -32,10 +32,10 @@ make quickstart
 ### 🐳 Docker Quick Start
 
 ```bash
-# Option 1: Use pre-built image
+# Option 1: Use pre-built image from Docker Hub
 docker run -it --rm -p 8000:8000 \
   -e OLLAMA_API=http://host.docker.internal:11434 \
-  ghcr.io/mupoese/ollama-mcp-server:latest
+  docker.io/mup1987/ollama-mcp-server:latest
 
 # Option 2: Build and run locally
 make docker-build
@@ -578,7 +578,7 @@ ENABLE_SECURITY_LOGGING=true
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/mupoese/Ollama-MCP-Server.git
+git clone https://github.com/muah1987/Ollama-MCP-Server.git
 cd Ollama-MCP-Server
 ```
 
@@ -1013,7 +1013,7 @@ Ollama-MCP-Server/
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/mupoese/Ollama-MCP-Server.git
+   git clone https://github.com/muah1987/Ollama-MCP-Server.git
    cd Ollama-MCP-Server
    ```
 
@@ -1163,7 +1163,7 @@ The project includes a GitHub Actions workflow that:
 3. **Test MCP server locally:**
    ```bash
    # Clone and test locally first
-   git clone https://github.com/mupoese/Ollama-MCP-Server.git
+   git clone https://github.com/muah1987/Ollama-MCP-Server.git
    cd Ollama-MCP-Server
    npm install
    node server.js
@@ -1198,10 +1198,9 @@ See `LICENSE` file for the complete license text.
 
 ## Support & Maintenance
 
-- **Author/Maintainer:** Mupoese
+- **Author/Maintainer:** muah1987
 - **Issues/Bugs:** via GitHub Issues
 - **Feature Requests:** via Pull Request or GitHub Issue
-- **Email:** info@mupoese.nl
 
 ---
 

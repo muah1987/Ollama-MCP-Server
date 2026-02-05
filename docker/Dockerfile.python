@@ -3,7 +3,7 @@
 # Build stage
 FROM python:3.12-slim as builder
 
-LABEL maintainer="mupoese"
+LABEL maintainer="muah1987"
 LABEL description="MCP DevOps Server - Python-based Model Context Protocol server"
 LABEL version="2.0.0"
 

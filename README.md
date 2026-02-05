@@ -1,6 +1,6 @@
 # MCP Ollama Server
 
-[![CI/CD Pipeline](https://github.com/mupoese/Ollama-MCP-Server/actions/workflows/ci.yml/badge.svg)](https://github.com/mupoese/Ollama-MCP-Server/actions/workflows/ci.yml)
+[![CI/CD Pipeline](https://github.com/muah1987/Ollama-MCP-Server/actions/workflows/ci.yml/badge.svg)](https://github.com/muah1987/Ollama-MCP-Server/actions/workflows/ci.yml)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![Docker](https://img.shields.io/badge/docker-ready-blue)](https://hub.docker.com/)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
@@ -13,7 +13,7 @@ A comprehensive Model Context Protocol (MCP) server that provides AI models with
 
 ```bash
 # Clone and setup
-git clone https://github.com/mupoese/Ollama-MCP-Server.git
+git clone https://github.com/muah1987/Ollama-MCP-Server.git
 cd Ollama-MCP-Server
 
 # One-command setup
@@ -77,8 +77,8 @@ docker-compose -f docker/docker-compose.yml up -d
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/mupoese/Ollama-MCP-Server/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/mupoese/Ollama-MCP-Server/discussions)
+- **Issues**: [GitHub Issues](https://github.com/muah1987/Ollama-MCP-Server/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/muah1987/Ollama-MCP-Server/discussions)
 
 ---
 
