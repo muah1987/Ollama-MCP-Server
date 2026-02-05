@@ -1,7 +1,7 @@
 FROM node:24-alpine
 
 # v1.0.0
-LABEL maintainer="muah1987 <info@muah1987.nl>" \
+LABEL maintainer="muah1987 <muah1987@users.noreply.github.com>" \
       author="muah1987" \
       version="1.0.0" \
       description="Custom MCP server for Ollama (by muah1987)" \
