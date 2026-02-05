@@ -53,6 +53,7 @@ make docker-start
 - **[Implementation Summary](docs/IMPLEMENTATION_SUMMARY.md)** - Technical details
 - **[MCP Gateway Functions](docs/MCP_GATEWAY_FUNCTIONS.md)** - Gateway documentation
 - **[CI/CD Setup](docs/CI_DOCKER_SETUP.md)** - Build and deployment
+- **[GitHub Secrets Configuration](docs/GITHUB_SECRETS.md)** - Required secrets for auto-publishing
 
 ## 🛠️ Development Commands
 
