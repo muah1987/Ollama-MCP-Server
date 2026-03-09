@@ -146,7 +146,7 @@ jobs:
           type=semver,pattern={{major}}.{{minor}}
 
     - name: Build Docker image
-      uses: docker/build-push-action@v6
+      uses: docker/build-push-action@v7
       with:
         context: .
         file: ./docker/Dockerfile.python
@@ -175,7 +175,7 @@ jobs:
 
     - name: Build and push to GitHub Container Registry
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: docker/build-push-action@v6
+      uses: docker/build-push-action@v7
       with:
         context: .
         file: ./docker/Dockerfile.python
@@ -188,7 +188,7 @@ jobs:
 
     - name: Build and push to Docker Hub
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: docker/build-push-action@v6
+      uses: docker/build-push-action@v7
       with:
         context: .
         file: ./docker/Dockerfile.python
