@@ -123,7 +123,7 @@ jobs:
 
     - name: Extract metadata for GHCR
       id: meta-ghcr
-      uses: docker/metadata-action@v5
+      uses: docker/metadata-action@v6
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         tags: |
@@ -134,7 +134,7 @@ jobs:
 
     - name: Extract metadata for Docker Hub
       id: meta-dockerhub
-      uses: docker/metadata-action@v5
+      uses: docker/metadata-action@v6
       with:
         images: docker.io/mup1987/ollama-mcp-server
         tags: |
