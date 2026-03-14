@@ -217,10 +217,19 @@ class MCPDevOpsServer:
             await self.shutdown()
 
     async def run_http(self) -> None:
-        """Run the server with HTTP transport"""
-        # Note: HTTP transport implementation would go here
-        # For now, we focus on stdio transport as it's more common for MCP
-        raise NotImplementedError("HTTP transport not yet implemented")
+        """Run the server with HTTP transport.
+
+        HTTP/SSE transport is not yet supported. Use stdio transport instead
+        by passing --transport=stdio or omitting the --transport flag.
+        """
+        self.logger.error(
+            "HTTP transport is not yet implemented. "
+            "Please use stdio transport (--transport=stdio)."
+        )
+        raise NotImplementedError(
+            "HTTP transport is not yet implemented. "
+            "Use --transport=stdio for MCP communication."
+        )
 
     async def run(self) -> None:
         """Run the server with the configured transport"""

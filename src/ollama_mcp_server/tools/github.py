@@ -79,7 +79,7 @@ class GitHubBaseTool(BaseTool):
                     error_data = {}
                     try:
                         error_data = json.loads(error_text)
-                    except:
+                    except (json.JSONDecodeError, ValueError):
                         pass
 
                     error_msg = error_data.get("message", error_text)

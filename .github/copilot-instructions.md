@@ -2,7 +2,9 @@
 
 **ALWAYS follow these instructions first and only fallback to additional search and context gathering if the information here is incomplete or found to be in error.**
 
-This is a Node.js-based Model Context Protocol (MCP) server that provides Ollama AI model integration. The server is built with ES modules and includes comprehensive testing, AI core functionality, and Docker support.
+This is a **Python 3.12+** Model Context Protocol (MCP) server that provides Ollama AI model integration and DevOps tools. The server uses Pydantic, Click, aiohttp, and structlog.
+
+> **Note:** Legacy Node.js code is archived in `/legacy/`. The active codebase is Python in `src/ollama_mcp_server/`.
 
 ## Quick Start & Critical Setup
 
@@ -14,236 +16,199 @@ This is a Node.js-based Model Context Protocol (MCP) server that provides Ollama
 git clone https://github.com/muah1987/Ollama-MCP-Server.git
 cd Ollama-MCP-Server
 
-# Install dependencies - takes ~15 seconds, NEVER CANCEL
-npm install
+# Install dependencies
+pip install -e ".[dev]"
+# or
+pip install -r requirements.txt
 
-# Validate setup - takes ~3 seconds total
-npm run lint          # Code quality check - always passes
-npm run validate       # Lint + tests - takes ~3s, expect 2 test failures due to MCP SDK issues
+# Validate setup
+make lint             # Code quality check (flake8)
+make test             # Run Python test suite (pytest)
 ```
 
 ## Working Development Commands
 
-### Code Quality (Always Works)
+### Code Quality
 ```bash
-# Linting - takes ~1 second, NEVER CANCEL even though it's fast
-npm run lint          # Check for code quality issues
-npm run lint:fix      # Auto-fix linting issues
+# Linting with flake8
+make lint             # Check for code quality issues
+flake8 src/ tests/    # Direct flake8 check
 
-# Both commands should ALWAYS complete successfully
-# If linting fails, fix the issues before proceeding
+# Formatting with black
+black src/ tests/     # Auto-format code
+
+# Type checking with mypy
+mypy src/             # Static type analysis
 ```
 
-### Testing (Partially Works) 
+### Testing
 ```bash
-# NEVER CANCEL: Test suite takes 2-3 seconds total
-npm test              # Run all tests (5/7 suites pass, 2 fail due to MCP SDK)
-npm run test:watch    # Run tests in watch mode
-npm run test:coverage # Run tests with coverage report
-
-# Expected test results:
-# - ✅ 5 test suites pass: config.test.js, schemas.test.js, validation.test.js, integration.test.js, ai-core.test.js
-# - ❌ 2 test suites fail: tooling-enhancements.test.js, code-feedback.test.js (MCP SDK import issues)
-# - Total: 67 tests pass, 0 tests fail (failures are import errors, not test failures)
+# Python test suite
+make test                                    # Run all tests
+pytest tests/python/                         # Run Python tests directly
+pytest tests/python/ -v                      # Verbose output
+pytest tests/python/ --cov=src/              # With coverage
+pytest tests/python/ -k "test_name"          # Run specific test
 ```
 
 ### Combined Validation
 ```bash
-# NEVER CANCEL: Takes ~3 seconds total - combines lint + test
-npm run validate
-
-# Expected behavior:
-# - Linting passes completely
-# - Tests run with 5/7 suites passing
-# - Command exits with code 1 due to test import failures
-# - This is normal behavior for current codebase state
+make lint && make test    # Lint then test
 ```
 
-## Known Issues and Current Limitations
+## Agent Self-Improvement System
 
-### ❌ Server Runtime Issues
-```bash
-# DO NOT attempt to run the server directly - it will fail:
-node server.js        # FAILS: MCP SDK missing dist files
+### Changelogs (`.github/changelogs/`)
+AI agents **MUST** maintain changelogs to track all modifications:
 
-# The @modelcontextprotocol/sdk package is missing built JavaScript files
-# This affects both runtime execution and some tests
-```
+1. **At session start:** Read the latest changelog in `.github/changelogs/` to understand recent changes
+2. **Before completing work:** Append a new entry to the current date's changelog file (e.g., `2026-03-14.md`)
+3. **Entry format:**
+   ```markdown
+   ## [ISO-8601-TIMESTAMP] {agent:AGENT_UUID}
 
-### ❌ Docker Build Issues
-```bash
-# DO NOT attempt Docker builds - they will fail:
-docker build -t ollama-mcp-server .  # FAILS: npm install timeout in container
+   ### Summary
+   Brief description of what was done.
 
-# Docker builds fail during npm install step after ~70 seconds
-# Issue appears to be related to network/dependency resolution in container
-```
+   ### Changes
+   - **Fixed** description of fix
+   - **Added** description of addition
+   - **Changed** description of change
 
-### ⚠️ Partial Test Coverage
-The test suite has import issues with MCP SDK but core functionality tests pass:
-- **config.test.js**: ✅ Configuration validation (6 tests)
-- **schemas.test.js**: ✅ Schema validation (multiple tests) 
-- **validation.test.js**: ✅ Input validation (multiple tests)
-- **integration.test.js**: ✅ AI core integration (4 tests)
-- **ai-core.test.js**: ✅ AI system tests (2 tests)
-- **tooling-enhancements.test.js**: ❌ Import errors
-- **code-feedback.test.js**: ❌ Import errors
+   ### Files Modified
+   - `path/to/file.py`
+   ```
+
+### Memory (`.github/memory/`)
+AI agents **MUST** use the memory system to learn from past sessions:
+
+1. **At session start:** Read `.github/memory/agent-log.md` to load context from previous sessions
+2. **Before completing work:** Append a new session entry with:
+   - **Timestamp** (ISO 8601)
+   - **Agent/AI identifier** using `{agent:UUID}` or `{ai:UUID}` format
+   - **Context** — what was the task, what was the state of the code
+   - **Decisions** — what choices were made and why
+   - **Known issues** — problems discovered or unresolved
+   - **Lessons learned** — what to do differently next time
+
+### Specifications (`.github/spec/`)
+- **code-audit.md** — Latest code quality audit results
+- **development-plan.md** — Roadmap and priorities
+
+### Build Exclusion
+The `.github/changelogs/`, `.github/memory/`, and `.github/spec/` folders are tracked
+in git for agent continuity but excluded from build artifacts via `.gitignore` rules
+for `artifacts/`, `dist/`, and `build/` directories.
 
 ## Repository Structure & Navigation
 
 ### Key Directories
 ```
 Ollama-MCP-Server/
-├── src/                    # Main source code
-│   ├── config/            # Configuration management
-│   ├── handlers/          # MCP tool handlers
-│   ├── utils/             # Utility functions
-│   └── server.js          # Main server implementation
-├── tests/                  # Test suite
-├── ai_core/                # AI learning system
-├── logic/                  # Pattern detection logic
-├── governance/             # AI governance framework
-├── server.js              # Entry point (imports src/server.js)
-├── package.json           # Dependencies and scripts
-├── .github/workflows/     # CI/CD pipeline
-└── docs/                  # Documentation
+├── src/ollama_mcp_server/     # Main Python source code
+│   ├── config/                # Configuration management (Pydantic)
+│   │   └── settings.py        # DevOpsConfig, OllamaConfig
+│   ├── server/                # MCP server implementation
+│   │   └── mcp_server.py      # MCPDevOpsServer class
+│   ├── tools/                 # MCP tool implementations (28 tools)
+│   │   ├── base_tool.py       # Abstract base class
+│   │   ├── ollama.py          # Ollama model tools (5)
+│   │   ├── github.py          # GitHub API tools (7)
+│   │   ├── git.py             # Git operations tools (4)
+│   │   ├── playwright.py      # Browser automation tools (9)
+│   │   ├── infrastructure.py  # Docker/K8s tools (3)
+│   │   ├── mcp_gateway.py     # MCP gateway tools (6)
+│   │   └── registry.py        # Tool registry
+│   ├── utils/                 # Utility functions
+│   │   └── logging.py         # Structured logging (structlog)
+│   └── main.py                # CLI entry point (Click)
+├── tests/
+│   ├── python/                # Python test suite (pytest)
+│   └── legacy/                # Archived Node.js tests
+├── legacy/                    # Archived Node.js implementation
+├── config/                    # Configuration files
+├── docs/                      # Documentation
+├── .github/
+│   ├── copilot-instructions.md  # This file
+│   ├── spec/                    # Specifications and plans
+│   ├── changelogs/              # Agent changelog tracking
+│   ├── memory/                  # Agent session memory
+│   └── workflows/               # CI/CD pipelines
+├── pyproject.toml             # Python project config
+├── requirements.txt           # Python dependencies
+├── Makefile                   # Development shortcuts
+└── README.md                  # Main documentation
 ```
 
 ### Important Files to Check After Changes
-- **src/config/index.js**: Always check after modifying environment variables
-- **src/handlers/schemas.js**: Check after adding new MCP tools
-- **src/utils/validation.js**: Check after modifying input validation
-- **tests/**: Always run relevant tests after code changes
+- **src/ollama_mcp_server/config/settings.py**: After modifying configuration
+- **src/ollama_mcp_server/tools/*.py**: After adding/modifying tools
+- **src/ollama_mcp_server/tools/registry.py**: After adding new tool categories
+- **src/ollama_mcp_server/server/mcp_server.py**: After changing server behavior
+- **tests/python/**: Always run relevant tests after code changes
 
-## Manual Validation Scenarios
+## Known Issues and Current Limitations
 
-### Test Configuration Changes
+### ⚠️ HTTP Transport Not Implemented
 ```bash
-# After modifying environment variables or configuration:
-npm run test -- --testNamePattern="config"  # Should pass all 6 tests
-
-# Validate specific configuration scenarios:
-# 1. Check default configuration loads correctly
-# 2. Verify environment variable override functionality
-# 3. Test invalid configuration rejection
+# The --transport=http flag is available in the CLI but not yet implemented
+# Using it will raise NotImplementedError with a descriptive message
+# Always use --transport=stdio (the default)
 ```
 
-### Test Schema Validation
-```bash
-# After adding or modifying MCP tool schemas:
-npm run test -- tests/schemas.test.js       # Should pass completely
-
-# Manual verification steps:
-# 1. Check schema definitions are valid JSON Schema
-# 2. Verify required fields are properly marked
-# 3. Test schema validation logic
-```
-
-### Integration Testing
-```bash
-# After major changes to core functionality:
-npm run test -- tests/integration.test.js   # Should pass AI core tests
-
-# Manual checks:
-# 1. AI status configuration validates
-# 2. Core component structure is maintained
-# 3. Integration points remain functional
-```
-
-## CI/CD Validation Requirements
-
-### Pre-commit Validation
-**ALWAYS run these commands before committing changes:**
-```bash
-npm run lint:fix    # Auto-fix linting issues
-npm run validate    # Ensure linting passes and core tests work
-```
-
-### Expected CI Behavior
-The GitHub Actions workflow (.github/workflows/ci.yml) includes:
-- **Lint check**: Should always pass
-- **Test suite**: Expects 5/7 suites to pass (known MCP SDK issues)
-- **Docker build**: Currently fails (known issue)
-- **Security audit**: Should pass
+### ⚠️ Legacy Node.js Tests
+The legacy test suite in `tests/legacy/` has import issues with the MCP SDK:
+- 5/7 suites pass, 2/7 fail due to SDK import errors
+- These are legacy tests from the Node.js implementation
+- Focus on Python tests in `tests/python/`
 
 ## Environment Configuration
 
 ### Key Environment Variables
 ```bash
-# Required for MCP functionality:
-OLLAMA_API=http://host.docker.internal:11434  # Default Ollama endpoint
-SILENCE_STARTUP=true                          # MCP protocol compatibility
-DEBUG=false                                   # Debug logging
-
-# Optional configuration:
-REQUEST_TIMEOUT=30000                         # HTTP timeout (ms)
-MAX_RETRIES=3                                 # Retry attempts
-AI_CORE_ENABLED=true                         # Enable AI learning system
+OLLAMA_API_URL=http://localhost:11434    # Ollama API endpoint
+GITHUB_TOKEN=ghp_...                    # GitHub API token
+DEBUG=false                             # Debug logging
+LOG_LEVEL=INFO                          # Log level
+ENVIRONMENT=development                 # Environment name
+TRANSPORT_TYPE=stdio                    # Transport type (stdio only)
 ```
-
-### Configuration File Location
-- Development: `.env` (example provided)
-- Runtime: Environment variables
-- Testing: Overridden in test setup
 
 ## Development Workflow Best Practices
 
 ### Making Code Changes
-1. **Always run linting first**: `npm run lint`
-2. **Make minimal changes**: Focus on specific functionality
-3. **Test immediately**: `npm run validate` after each change
-4. **Check related files**: Follow the "Important Files" guidance above
+1. **Read agent memory**: Check `.github/memory/agent-log.md`
+2. **Read changelogs**: Check `.github/changelogs/` for recent changes
+3. **Run linting**: `make lint` or `flake8 src/ tests/`
+4. **Make minimal changes**: Focus on specific functionality
+5. **Test immediately**: `pytest tests/python/` after each change
+6. **Update changelog**: Append to `.github/changelogs/YYYY-MM-DD.md`
+7. **Update memory**: Append to `.github/memory/agent-log.md`
 
-### Adding New Features
-1. **Add schema definitions** in `src/handlers/schemas.js`
-2. **Implement validation** in `src/utils/validation.js`  
-3. **Add handler logic** in appropriate `src/handlers/` file
-4. **Write tests** following existing patterns
-5. **Run validation**: `npm run validate`
+### Adding New Tools
+1. **Create tool class** extending `BaseTool` in `src/ollama_mcp_server/tools/`
+2. **Register tool** in the tool registry
+3. **Add tests** in `tests/python/`
+4. **Update docs** if needed
+5. **Run validation**: `make lint && make test`
 
 ### Debugging Issues
-1. **Check linting first**: `npm run lint`
-2. **Run specific tests**: `npm run test -- --testNamePattern="pattern"`
-3. **Enable debug logging**: Set `DEBUG=true` in environment
-4. **Check configuration**: Validate environment variables
-
-## Working Commands Reference
-
-```bash
-# Development (all commands work)
-npm install                    # ~15s - dependency installation
-npm run lint                   # ~1s - code quality check  
-npm run lint:fix              # ~1s - auto-fix issues
-npm test                      # ~3s - run test suite (5/7 pass)
-npm run test:watch            # ~3s+ - watch mode testing
-npm run test:coverage         # ~3s - coverage report
-npm run validate              # ~3s - lint + test combined
-
-# Analysis
-npm audit                     # Security audit
-npm ls                        # Dependency tree
-git status                    # Repository status
-
-# File operations
-find src/ -name "*.js"        # List source files
-grep -r "pattern" src/        # Search codebase
-```
+1. **Check agent memory first**: `.github/memory/agent-log.md`
+2. **Check linting**: `make lint`
+3. **Run specific tests**: `pytest tests/python/ -k "pattern"`
+4. **Enable debug logging**: Set `DEBUG=true` and `LOG_LEVEL=DEBUG`
+5. **Check configuration**: Review environment variables
 
 ## Troubleshooting Common Issues
 
-### "Cannot find module @modelcontextprotocol/sdk"
-- **Issue**: MCP SDK missing built files
-- **Workaround**: Use working tests and linting for development
-- **Status**: Known issue affecting runtime and some tests
+### Import errors in legacy tests
+- **Issue**: MCP SDK missing built files in legacy Node.js tests
+- **Impact**: Only affects `tests/legacy/`, not the active Python codebase
+- **Resolution**: Focus on Python tests in `tests/python/`
 
 ### Docker build failures
-- **Issue**: npm install fails in container after ~70s
+- **Issue**: Container builds may fail during dependency installation
 - **Workaround**: Use local development environment
-- **Status**: Known issue under investigation
+- **Status**: Known issue
 
-### Test import errors
-- **Issue**: 2/7 test suites fail with import errors
-- **Impact**: 5/7 test suites work normally, core functionality testable
-- **Workaround**: Focus on working test suites for validation
-
-**Remember**: This codebase has known MCP SDK dependency issues that prevent full server runtime and Docker builds. Focus on the working development workflow (editing, linting, core testing) while these issues are being resolved.
+**Remember**: This codebase is a Python project. Always check `.github/memory/agent-log.md` and `.github/changelogs/` before starting work to learn from previous sessions and avoid repeating mistakes.
