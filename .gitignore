@@ -91,3 +91,9 @@ docker-compose.override.yml
 # Temporary files
 .tmp/
 tmp/
+
+# GitHub agent metadata (excluded from builds, kept in repo for agent self-improvement)
+# These folders are tracked by git but excluded from build/dist artifacts
+artifacts/.github/
+dist/.github/
+build/.github/
